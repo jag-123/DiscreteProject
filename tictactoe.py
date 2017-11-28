@@ -1,3 +1,5 @@
+import random
+
 class TicTacToe():
 
 	def __init__(self):
@@ -16,18 +18,16 @@ class TicTacToe():
 		print(self.squares[6], self.squares[7], self.squares[8])
 
 	def getAvailableMoves(self):
+		self.availableMoves = []
+		for i in range(9):
+			if self.squares[i] == "_":
+				self.availableMoves.append(i)
 
+		return self.availableMoves
 
-	def makeMove(self, position):
+	def makeMove(self, position, player):
 		if self.squares[position] == "_":
-			self.squares[position] = self.player
-
-		if self.player == "x":
-			self.player = "o"
-		else:
-			self.player = "x"
-
-		self.drawBoard()
+			self.squares[position] = player
 
 	def getWinner(self):
 		for player in ("x", "o"):
@@ -37,13 +37,39 @@ class TicTacToe():
 
 		if "_" not in self.squares.values():
 			return "tie"
+		return None
+
+	def isGameover(self):
+		if "_" not in self.squares.values():
+			return True
+		if self.getWinner() != None:
+			return True
+		return False
+
+def getEnemy(player):
+	if player == 'x':
+		return 'o'
+	return 'x'
+
 
 if __name__ == '__main__':
 	game = TicTacToe()
 	game.createBoard()
-	game.makeMove(1)
-	game.makeMove(2)
-	game.makeMove(4)
-	game.makeMove(6)
-	game.makeMove(7)
-	game.getWinner()
+	game.drawBoard()
+
+	while not game.isGameover():
+		player = 'x'
+		playerMove = int(input("Next Move: "))
+		if not playerMove in game.getAvailableMoves():
+			continue
+		game.makeMove(playerMove, player)
+		game.drawBoard()
+
+		if game.isGameover():
+			break
+		player = getEnemy(player)
+		computer_move = random.choice(game.getAvailableMoves())
+		game.makeMove(computer_move, player)
+		game.drawBoard()
+
+	print ("winner: ", game.getWinner())

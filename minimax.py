@@ -1,3 +1,4 @@
+"""pseudocode from wiki"""
 def minimax(node, depth, maximizingPlayer):
 	if depth = 0 or node is a terminal node
 		return the heuristic value of node
