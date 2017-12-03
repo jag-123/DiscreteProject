@@ -1,75 +1,73 @@
 import random
+from minimax import AI
 
-class TicTacToe():
+class Tic():
+    winning_combos = (
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6])
 
-	def __init__(self):
-		self.squares={}
-		self.winningNumbers = ([0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6])
-		self.player = "x"
+    winners = ('X-win', 'Draw', 'O-win')
 
-	def createBoard(self):
-		for i in range(9):
-			self.squares[i]="_"
+    def __init__(self):
+      self.squares = [None for i in range(9)]
 
-	def drawBoard(self):
-		print ()
-		print(self.squares[0], self.squares[1], self.squares[2])
-		print(self.squares[3], self.squares[4], self.squares[5])
-		print(self.squares[6], self.squares[7], self.squares[8])
+    def show(self):
+      print (self.squares[0:3])
+      print (self.squares[3:6])
+      print (self.squares[6:9])
 
-	def getAvailableMoves(self):
-		self.availableMoves = []
-		for i in range(9):
-			if self.squares[i] == "_":
-				self.availableMoves.append(i)
+    def available_moves(self):
+      self.availableMoves = []
+      for i in range(9):
+        if self.squares[i] == None:
+          self.availableMoves.append(i)
 
-		return self.availableMoves
+      return self.availableMoves
 
-	def makeMove(self, position, player):
-		if self.squares[position] == "_":
-			self.squares[position] = player
+    def complete(self):
+      if None not in [v for v in self.squares]:
+        return True
+      if self.winner() != None:
+        return True
+      return False
 
-	def getWinner(self):
-		for player in ("x", "o"):
-			for win in self.winningNumbers:
-				if self.squares[win[0]] == player and self.squares[win[1]] == player and self.squares[win[2]] == player:
-					return player
+    def winner(self):
+      for player in ('X', 'O'):
+        positions = self.get_squares(player)
+        for combo in self.winning_combos:
+          win = True
+          for pos in combo:
+            if pos not in positions:
+              win = False
+          if win:
+            return player
+      return None
 
-		if "_" not in self.squares.values():
-			return "tie"
-		return None
+    def get_squares(self, player):
+      """squares that belong to a player"""
+      return [k for k, v in enumerate(self.squares) if v == player]
 
-	def isGameover(self):
-		if "_" not in self.squares.values():
-			return True
-		if self.getWinner() != None:
-			return True
-		return False
+    def make_move(self, position, player):
+      self.squares[position] = player
 
-def getEnemy(player):
-	if player == 'x':
-		return 'o'
-	return 'x'
+if __name__ == "__main__":
+    board = Tic()
+    board.show()
+    AI = AI(board)
 
+    while not board.complete():
+        player = 'X'
+        player_move = int(input("Next Move: ")) - 1
+        if not player_move in board.available_moves():
+            continue
+        board.make_move(player_move, player)
+        board.show()
 
-if __name__ == '__main__':
-	game = TicTacToe()
-	game.createBoard()
-	game.drawBoard()
-
-	while not game.isGameover():
-		player = 'x'
-		playerMove = int(input("Next Move: "))
-		if not playerMove in game.getAvailableMoves():
-			continue
-		game.makeMove(playerMove, player)
-		game.drawBoard()
-
-		if game.isGameover():
-			break
-		player = getEnemy(player)
-		computer_move = random.choice(game.getAvailableMoves())
-		game.makeMove(computer_move, player)
-		game.drawBoard()
-
-	print ("winner: ", game.getWinner())
+        if board.complete():
+            break
+        player = AI.get_enemy(player)
+        computer_move = AI.determine(board, player)
+        board.make_move(computer_move, player)
+        board.show()
+    print ("winner is", board.winner())
