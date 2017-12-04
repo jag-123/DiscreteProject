@@ -4,7 +4,7 @@ class AI():
     def __init__(self,board):
         self.board = board
 
-    def determine(self, board, player):
+    def determineMove(self, board, player):
         a = -2
         choices = []
         if len(board.available_moves()) == 9:

@@ -67,7 +67,7 @@ if __name__ == "__main__":
         if board.complete():
             break
         player = AI.get_enemy(player)
-        computer_move = AI.determine(board, player)
+        computer_move = AI.determineMove(board, player)
         board.make_move(computer_move, player)
         board.show()
     print ("winner is", board.winner())
