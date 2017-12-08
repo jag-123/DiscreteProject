@@ -75,7 +75,7 @@ class GameView(object):
     
     glClear(GL_DEPTH_BUFFER_BIT)
 
-    self.draw_fill()
+    # self.draw_fill()
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
@@ -84,7 +84,7 @@ class GameView(object):
   def rotate_camera(self):
     key = pygame.key.get_pressed()
     if key[K_LEFT]:
-      self.camera_rot[0] += 2.0
+      self.camera_rot[0] += 2
     if key[K_RIGHT]:
       self.camera_rot[0] -= 2
     if key[K_UP]:
