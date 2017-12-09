@@ -8,6 +8,8 @@ from OpenGL.GLU import *
 
 from math import *
 
+from model import GameModel
+
 class GameView(object):
   def __init__(self, model):
     pygame.init()
@@ -29,6 +31,16 @@ class GameView(object):
 
     pygame.display.set_caption('3d Tic Tac Toe')
 
+    # List for X
+    self.dl_x = glGenLists(1)
+    glNewList(self.dl_x,GL_COMPILE)
+    glColor4f(1.0,0.0,0.7,1)
+    glBegin(GL_LINES)
+    glVertex3f(0.1,0.0,0.1); glVertex3f(0.9,0.0,0.9)
+    glVertex3f(0.1,0.0,0.9); glVertex3f(0.9,0.0,0.1)
+    glEnd()
+    glEndList()
+
   def set_view_3D(self, rect):
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
@@ -43,7 +55,7 @@ class GameView(object):
       
     camera_pos = [
         cen[0] + rad*cos(radians(self.camera_rot[0]))*cos(radians(self.camera_rot[1])),
-        cen[1] + rad                     *sin(radians(self.camera_rot[1])),
+        cen[1] + rad*sin(radians(self.camera_rot[1])),
         cen[2] + rad*sin(radians(self.camera_rot[0]))*cos(radians(self.camera_rot[1]))
     ]
     gluLookAt(
@@ -70,16 +82,28 @@ class GameView(object):
       glVertex3f(0,spacing*layer,4)
       glEnd()
 
-  def draw(self):
-    self.set_camera()
-    
-    glClear(GL_DEPTH_BUFFER_BIT)
+  def draw_square(self,x,y,z):
+    glBegin(GL_QUADS)
+    glVertex3f(x,  spacing*y,z  )
+    glVertex3f(x+1,spacing*y,z  )
+    glVertex3f(x+1,spacing*y,z+1)
+    glVertex3f(x,  spacing*y,z+1)
+    glEnd()
 
-    # self.draw_fill()
+  def draw_pieces(self):
+    for y in range(4):
+      for z in range(4):
+        for x in range(4):
+          piece = self.model.data[y][z][x]
+          if piece == None:
+            continue
 
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-
-    self.draw_grid()
+          glPushMatrix()
+          glTranslatef(x,spacing*y,z)
+          if piece == 1:
+            glCallList(self.dl_x)
+          #glCallList(self.dl_o)
+          glPopMatrix()
 
   def rotate_camera(self):
     key = pygame.key.get_pressed()

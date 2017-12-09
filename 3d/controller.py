@@ -10,7 +10,7 @@ from settings import *
 class GameController(object):
   """controller for game. When a key is pressed, does specific action """
   def __init__(self, model):
-    self.model = GameModel()
+    self.model = model
     self.view = GameView(self.model)
 
     self.done = False
@@ -18,23 +18,22 @@ class GameController(object):
     self.solution = None
 
     self.mouse_pos = [0,0,0]
-    self.mouse_valid = False
 
   def select_square(self):
-      #if pygame.mouse.get_pressed()[0]:
-      mouse_position = list(pygame.mouse.get_pos())
-      mouse_position[1] = screen_size[1] - mouse_position[1]
-      mouse_rel = pygame.mouse.get_rel()
+    # if pygame.mouse.get_pressed():
+    if self.mouse_pos[0]>=0 and self.mouse_pos[0]<=3 and\
+      self.mouse_pos[1]>=0 and self.mouse_pos[1]<=3 and\
+      self.mouse_pos[2]>=0 and self.mouse_pos[2]<=3:
+      self.model.data[self.mouse_pos[1]][self.mouse_pos[2]][self.mouse_pos[0]] = 1
+    print(self.mouse_pos)
 
-      self.view.draw_fill()
-
-      self.mouse_pos = self.get_pos_at(mouse_position,False)
-      self.mouse_pos[0] = int(self.mouse_pos[0])
-      self.mouse_pos[1] = int(round(self.mouse_pos[1]/spacing))
-      self.mouse_pos[2] = int(self.mouse_pos[2])
-
-      print(self.mouse_pos)
-      #self.solution = self.model.check_if_empty()
+  def detect_square(self):
+    mouse_position = list(pygame.mouse.get_pos())
+    mouse_position[1] = screen_size[1] - mouse_position[1]
+    self.mouse_pos = self.get_pos_at(mouse_position,False)
+    self.mouse_pos[0] = int(self.mouse_pos[0])
+    self.mouse_pos[1] = int(round(self.mouse_pos[1]/spacing))
+    self.mouse_pos[2] = int(self.mouse_pos[2])
 
   def get_pos_at(self, windowcoord,flip=True):
     viewport = glGetIntegerv(GL_VIEWPORT)

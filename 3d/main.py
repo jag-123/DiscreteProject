@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from settings import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -19,6 +20,13 @@ class GameMain(object):
     done = False
 
     while not done:
+      self.view.set_camera()
+      self.view.rotate_camera()
+      glClear(GL_DEPTH_BUFFER_BIT)
+      
+      self.view.draw_fill()
+
+      self.controller.detect_square()
 
       for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -27,9 +35,21 @@ class GameMain(object):
           pygame.quit()
           quit()
 
-      self.view.rotate_camera()
       glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-      self.view.draw()
+
+      self.mouse_valid =\
+      self.controller.mouse_pos[0]>=0 and self.controller.mouse_pos[0]<=3 and\
+      self.controller.mouse_pos[1]>=0 and self.controller.mouse_pos[1]<=3 and\
+      self.controller.mouse_pos[2]>=0 and self.controller.mouse_pos[2]<=3
+
+      if self.mouse_valid:
+        c = board_colors[self.controller.mouse_pos[1]]
+        glColor4f(c[0],c[1],c[2],0.4)
+        self.view.draw_square(*self.controller.mouse_pos)
+
+      self.view.draw_pieces()
+      self.view.draw_grid()
+
       pygame.display.flip()
       pygame.time.wait(10)
 
