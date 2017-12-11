@@ -22,6 +22,6 @@ new_combos = winning_combo[:]
 
 for i,combo in enumerate(winning_combo):
   for j,point in enumerate(combo):
-    new_combos[i][j] = (point[0]*16)+ (point[1]*4)+point[2]
+    new_combos[i][j] = (point[0])+ (point[1]*16)+(point[2]*4)
 
 print (new_combos)
