@@ -11,9 +11,10 @@ class AI():
             return 4
         for move in board.available_moves():
             board.make_move(move, player)
-            val = self.alphabeta(board, self.get_enemy(player), -2, 2)
+            val = self.alphabeta(board, self.get_enemy(player), -2, 2, 0)
             board.make_move(move, None)
-            print ("move:", move + 1, "causes:", board.winners[val + 1])
+            print ("move:", move+1, "heuristic:", val)
+            # print ("move:", move + 1, "causes:", board.winners[val + 1], board.heuristic)
             if val > a:
                 a = val
                 choices = [move]
@@ -21,17 +22,23 @@ class AI():
                 choices.append(move)
         return random.choice(choices)
 
-    def alphabeta(self, node, player, alpha, beta):
+    def alphabeta(self, node, player, alpha, beta, depth):
+
+
+        if depth == node.difficulty:
+            return node.heuristic_calc()
+
         if node.complete():
             if node.winner() == 'X':
-                return -1
+                return -1000
             elif node.complete() == True and node.winner() is None:
                 return 0
             elif node.winner() == 'O':
-                return 1
+                return 1000
+
         for move in node.available_moves():
             node.make_move(move, player)
-            val = self.alphabeta(node, self.get_enemy(player), alpha, beta)
+            val = self.alphabeta(node, self.get_enemy(player), alpha, beta, depth+1)
             node.make_move(move, None)
             if player == 'O':
                 if val > alpha:

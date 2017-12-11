@@ -18,10 +18,17 @@ winning_combo = [
 [[3,3,0],[2,2,1],[1,1,2],[0,0,3]],[[3,3,3],[2,2,2],[1,1,1],[0,0,0]]
 ]
 
+
+
+
+
 new_combos = winning_combo[:]
 
 for i,combo in enumerate(winning_combo):
   for j,point in enumerate(combo):
-    new_combos[i][j] = (point[0])+ (point[1]*16)+(point[2]*4)
+    new_combos[i][j] = (point[0])+(point[1]*16)+(point[2]*4)
+
+for i,x in enumerate(new_combos):
+	new_combos[i] = tuple(x)
 
 print (new_combos)
