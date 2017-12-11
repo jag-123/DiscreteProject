@@ -17,3 +17,11 @@ winning_combo = [
 #vertical diagonal
 [[3,3,0],[2,2,1],[1,1,2],[0,0,3]],[[3,3,3],[2,2,2],[1,1,1],[0,0,0]]
 ]
+
+new_combos = winning_combo[:]
+
+for i,combo in enumerate(winning_combo):
+  for j,point in enumerate(combo):
+    new_combos[i][j] = (point[0]*16)+ (point[1]*4)+point[2]
+
+print (new_combos)

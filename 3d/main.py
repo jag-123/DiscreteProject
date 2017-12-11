@@ -31,6 +31,7 @@ class GameMain(object):
       for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
           self.controller.select_square()
+          print(self.controller.mouse_pos)
         elif event.type == pygame.QUIT:
           pygame.quit()
           quit()

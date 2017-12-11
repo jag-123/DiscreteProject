@@ -41,6 +41,17 @@ class GameView(object):
     glEnd()
     glEndList()
 
+    # List for O
+    self.dl_o = glGenLists(1)
+    glNewList(self.dl_o,GL_COMPILE)
+    glColor4f(1,1,1,1)
+    glBegin(GL_LINE_STRIP)
+    for i in range(0,100+1,1):
+      angle = radians(360.0*i/100.0)
+      glVertex3f(0.5+0.4*cos(angle),0.0,0.5+0.4*sin(angle))
+    glEnd()
+    glEndList()
+
   def set_view_3D(self, rect):
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
@@ -102,7 +113,8 @@ class GameView(object):
           glTranslatef(x,spacing*y,z)
           if piece == 1:
             glCallList(self.dl_x)
-          #glCallList(self.dl_o)
+          if piece == 2:
+            glCallList(self.dl_o)
           glPopMatrix()
 
   def rotate_camera(self):

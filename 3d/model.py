@@ -15,3 +15,6 @@ class GameModel(object):
           row.append(None)
         layer.append(row)
       self.data.append(layer)
+
+  def is_over(self):
+    pass
