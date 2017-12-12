@@ -19,69 +19,21 @@ class TicTacToe3D():
       print (self.squares[4:8])
       print (self.squares[8:12])
       print (self.squares[12:16])
-
       print ("")
       print (self.squares[16:20])
       print (self.squares[20:24])
       print (self.squares[24:28])
       print (self.squares[28:32])
-
-
       print ("")
       print (self.squares[32:36])
       print (self.squares[36:40])
       print (self.squares[40:44])
       print (self.squares[44:48])
       print ("")
-
-
-
       print (self.squares[48:52])
-
       print (self.squares[52:56])
       print (self.squares[56:60])
-
       print (self.squares[60:64])
-
-
-
-    def visualize3D(self):
-      print("                 ________________")
-      print("                / {0} /   /   / O /|".format("X"))
-      print("               /___/___/___/___/ |")
-      print("              / O / X /   / X /  |")
-      print("             /___/___/___/___/   |")
-      print("            /   / O / X / O /    |")
-      print("           /___/___/___/___/     |")
-      print("          /   /   /   / O /      |")
-      print("         /___/___/___/___/       |")
-      print("        |       |________|_______|")
-      print("        |       /   /   /|O /   /|")
-      print("        |      /___/___/_|_/___/ |")
-      print("        |     / X / X / O|/ X /  |")
-      print("        |    /___/___/___|___/   |")
-      print("        |   /   / O / O /|  /    |")
-      print("        |  /___/___/___/_|_/     |")
-      print("        | /   /   / O /  |/      |")
-      print("        |/___/___/___/___|       |")
-      print("        |       |________|_______|")
-      print("        |       / X / O /|  /   /|")
-      print("        |      /___/___/_|_/___/ |")
-      print("        |     / X / X / O|/   /  |")
-      print("        |    /___/___/___|___/   |")
-      print("        |   /   / O / X /|  /    |")
-      print("        |  /___/___/___/_|_/     |")
-      print("        | /   /   /   / X|/      |")
-      print("        |/___/___/___/___|       |")
-      print("        |       |________|_______|")
-      print("        |       / O /   /|  /   /")
-      print("        |      /___/___/_|_/___/")
-      print("        |     / X / X / X|/ X /")
-      print("        |    /___/___/___|___/")
-      print("        |   / O / O /   /|  /")
-      print("        |  /___/___/___/_|_/")
-      print("        | / O /   /   / X|/")
-      print("        |/___/___/___/___|")
 
 
     def available_moves(self):

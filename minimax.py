@@ -5,13 +5,12 @@ class AI():
         self.board = board
 
     def determineMove(self, board, player):
-        a = -2
+        a = -9999999
         choices = []
-        if len(board.available_moves()) == 9:
-            return 4
+
         for move in board.available_moves():
             board.make_move(move, player)
-            val = self.alphabeta(board, self.get_enemy(player), -2, 2, 0)
+            val = self.alphabeta(board, self.get_enemy(player), -1000, 1000, 0)
             board.make_move(move, None)
             print ("move:", move+1, "heuristic:", val)
             # print ("move:", move + 1, "causes:", board.winners[val + 1], board.heuristic)
@@ -20,18 +19,22 @@ class AI():
                 choices = [move]
             elif val == a:
                 choices.append(move)
+        print(choices)
         return random.choice(choices)
 
     def alphabeta(self, node, player, alpha, beta, depth):
 
 
         if depth == node.difficulty:
-            return node.heuristic_calc()
+            a = node.heuristic_calc()
+            # print(a)
+            return -a
 
         if node.complete():
             if node.winner() == 'X':
+                print("heyyy")
                 return -1000
-            elif node.complete() == True and node.winner() is None:
+            elif node.winner() is None:
                 return 0
             elif node.winner() == 'O':
                 return 1000
