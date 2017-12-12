@@ -111,9 +111,9 @@ class GameView(object):
 
           glPushMatrix()
           glTranslatef(x,spacing*y,z)
-          if piece == 1:
+          if piece == 'X':
             glCallList(self.dl_x)
-          if piece == 2:
+          if piece == 'O':
             glCallList(self.dl_o)
           glPopMatrix()
 

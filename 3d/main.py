@@ -36,23 +36,33 @@ class GameMain(object):
 
       for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-          self.controller.select_square()
-          player_move = self.controller.mouse_pos
-          print(player_move)
-          player_move = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
-          print(player_move)
+          if ((self.controller.mouse_pos[0])+(self.controller.mouse_pos[1]*16)+(self.controller.mouse_pos[2]*4)) in self.board.available_moves():
+            self.controller.select_square()
+            player_move = self.controller.mouse_pos
+            print(player_move)
+            player_move = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
+            print(player_move)
 
-          player = 'X'
-          if not player_move in self.board.available_moves():
-            continue
-          self.board.make_move(player_move, player)
+            player = 'X'
 
-          if self.board.complete():
+            self.board.make_move(player_move, player)
+            self.board.show()
+            
+            if self.board.complete():
+              print('done')
+              pygame.time.wait(100)
+              done = True
               break
-          player = self.AI.get_enemy(player)
-          computer_move = self.AI.determineMove(self.board, player)
-          self.board.make_move(computer_move, player)
-          #self.board.show()
+
+            player = self.AI.get_enemy(player)
+            computer_move = self.AI.determineMove(self.board, player)
+            self.board.make_move(computer_move, player)
+
+            a = divmod(computer_move,16)
+            b = divmod(a[1],4)
+            self.model.data[b[1]][a[0]][b[0]] = 'O'
+            print(b[1],a[0],b[0])
+            print(computer_move)
 
         elif event.type == pygame.QUIT:
           pygame.quit()
@@ -70,12 +80,14 @@ class GameMain(object):
         glColor4f(c[0],c[1],c[2],0.4)
         self.view.draw_square(*self.controller.mouse_pos)
 
+
       self.view.draw_pieces()
       self.view.draw_grid()
 
       pygame.display.flip()
       pygame.time.wait(10)
 
+    print ("winner is", self.board.winner())
 
 if __name__ == '__main__':
   MainWindow = GameMain()
