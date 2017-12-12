@@ -1,10 +1,3 @@
-
-#basic idea for converter, input a as a 1D coordinate
-a = divmod(61,16)
-b = divmod(a[1],4)
-print(b[1],a[0],b[0])
-
-
 # 0-15
 # 16-31
 # 32-47
@@ -45,7 +38,7 @@ new_combos = winning_combo[:]
 #     new_combos[i][j] = (point[0])+(point[1]*16)+(point[2]*4)
 
 
-point = [1,3,3]
+point = [0,3,0]
 
 print((point[0])+(point[1]*16)+(point[2]*4))
 # for i,x in enumerate(new_combos):
@@ -55,6 +48,6 @@ winning_combos =((51, 50, 49, 48), (55, 54, 53, 52), (59, 58, 57, 56), (63, 62, 
 
 
 #basic idea for converter, input a as a 1D coordinate
-a = divmod(61,16)
+a = divmod(48,16)
 b = divmod(a[1],4)
 print(b[1],a[0],b[0])
