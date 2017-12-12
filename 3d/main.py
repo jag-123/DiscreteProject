@@ -46,12 +46,6 @@ class GameMain(object):
 
             self.board.make_move(player_move2, player)
 
-            if self.board.complete():
-              print('done')
-              pygame.time.wait(1000)
-              done = True
-              break
-
             player = self.AI.get_enemy(player)
             computer_move = self.AI.determineMove(self.board, player)
             self.board.make_move(computer_move, player)
@@ -60,6 +54,12 @@ class GameMain(object):
             b = divmod(a[1],4)
             self.model.data[a[0]][b[0]][b[1]] = 'O'
 
+            if self.board.complete():
+              print('done')
+              pygame.time.wait(1000)
+              done = True
+              break
+            
             print(self.model.data)
 
             print(player_move)

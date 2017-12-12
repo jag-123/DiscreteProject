@@ -48,6 +48,7 @@ winning_combos =((51, 50, 49, 48), (55, 54, 53, 52), (59, 58, 57, 56), (63, 62, 
 
 
 #basic idea for converter, input a as a 1D coordinate
-a = divmod(48,16)
+#60,44,28,60
+a = divmod(60,16)
 b = divmod(a[1],4)
 print(b[1],a[0],b[0])

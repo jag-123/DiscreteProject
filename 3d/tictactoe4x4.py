@@ -2,17 +2,27 @@ import random
 from minimax import AI
 import math
 
-class TicTacToe3D():
-    winning_combos = (
-      (51, 50, 49, 48), (55, 54, 53, 52), (59, 58, 57, 56), (63, 62, 61, 60), (35, 34, 33, 32), (39, 38, 37, 36), (43, 42, 41, 40), (47, 46, 45, 44), (19, 18, 17, 16), (23, 22, 21, 20), (27, 26, 25, 24), (31, 30, 29, 28), (3, 2, 1, 0), (7, 6, 5, 4), (11, 10, 9, 8), (15, 14, 13, 12), (51, 55, 59, 63), (50, 54, 58, 62), (49, 53, 57, 61), (48, 52, 56, 60), (35, 39, 43, 47), (34, 38, 42, 46), (33, 37, 41, 45), (32, 36, 40, 44), (19, 23, 27, 31), (18, 22, 26, 30), (17, 21, 25, 29), (16, 20, 24, 28), (3, 7, 11, 15), (2, 6, 10, 14), (1, 5, 9, 13), (0, 4, 8, 12), (51, 54, 57, 60), (63, 58, 53, 48), (35, 38, 41, 44), (47, 42, 37, 32), (19, 22, 25, 28), (31, 26, 21, 16), (3, 6, 9, 12), (15, 10, 5, 0), (51, 35, 19, 3), (50, 34, 18, 2), (49, 33, 17, 1), (48, 32, 16, 0), (55, 39, 23, 7), (54, 38, 22, 6), (53, 37, 21, 5), (52, 36, 20, 4), (59, 43, 27, 11), (58, 42, 26, 10), (57, 41, 25, 9), (56, 40, 24, 8), (63, 47, 31, 15), (62, 46, 30, 14), (61, 45, 29, 13), (60, 44, 28, 60), (51, 38, 25, 12), (63, 42, 21, 0)
+from settings import *
 
-    )
+class TicTacToe3D():
+    new_combos = winning_combos[:]
+
+    for i,combo in enumerate(winning_combos):
+      for j,point in enumerate(combo):
+        new_combos[i][j] = (point[0])+(point[1]*16)+(point[2]*4)
+
+    for i,x in enumerate(new_combos):
+      new_combos[i] = tuple(x)
+
+    winning_combos = new_combos
+
+    print(winning_combos)
 
     winners = ('X-win', 'Draw', 'O-win')
 
     def __init__(self):
       self.squares = [None for i in range(64)]
-      self.difficulty = 3
+      self.difficulty = 1
       self.heuristic = 0
 
     def show(self):
@@ -95,6 +105,7 @@ class TicTacToe3D():
             if pos not in positions:
               win = False
           if win:
+            print(combo)
             return player
       return None
 
