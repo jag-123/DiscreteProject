@@ -36,38 +36,32 @@ class GameMain(object):
 
       for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-          if ((self.controller.mouse_pos[0])+(self.controller.mouse_pos[1]*16)+(self.controller.mouse_pos[2]*4)) in self.board.available_moves():
-            self.controller.select_square()
-            player_move = self.controller.mouse_pos
-            player_move2 = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
+          if not self.board.complete():
+            if ((self.controller.mouse_pos[0])+(self.controller.mouse_pos[1]*16)+(self.controller.mouse_pos[2]*4)) in self.board.available_moves():
+              self.controller.select_square()
+              player_move = self.controller.mouse_pos
+              player_move2 = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
 
+              player = 'X'
 
-            player = 'X'
+              self.board.make_move(player_move2, player)
 
-            self.board.make_move(player_move2, player)
+              player = self.AI.get_enemy(player)
+              computer_move = self.AI.determineMove(self.board, player)
+              self.board.make_move(computer_move, player)
 
-            player = self.AI.get_enemy(player)
-            computer_move = self.AI.determineMove(self.board, player)
-            self.board.make_move(computer_move, player)
+              a = divmod(computer_move,16)
+              b = divmod(a[1],4)
+              self.model.data[a[0]][b[0]][b[1]] = 'O'
 
-            a = divmod(computer_move,16)
-            b = divmod(a[1],4)
-            self.model.data[a[0]][b[0]][b[1]] = 'O'
+              # print(self.model.data)
 
-            if self.board.complete():
-              print('done')
-              pygame.time.wait(1000)
-              done = True
-              break
-            
-            print(self.model.data)
+              # print(player_move)
+              # print(player_move2)
+              # print(b[1],a[0],b[0])
+              # print(computer_move)
 
-            print(player_move)
-            print(player_move2)
-            print(b[1],a[0],b[0])
-            print(computer_move)
-
-            print(self.board.show())
+              # print(self.board.show())
 
         elif event.type == pygame.QUIT:
           pygame.quit()
@@ -85,9 +79,15 @@ class GameMain(object):
         glColor4f(c[0],c[1],c[2],0.4)
         self.view.draw_square(*self.controller.mouse_pos)
 
-
       self.view.draw_pieces()
       self.view.draw_grid()
+
+      if self.board.complete():
+        for square in self.board.win:
+          a = divmod(square,16)
+          b = divmod(a[1],4)
+          glColor4f(1,1,0,0.5)
+          self.view.draw_square(b[1],a[0],b[0])
 
       pygame.display.flip()
       pygame.time.wait(10)

@@ -24,6 +24,7 @@ class TicTacToe3D():
       self.squares = [None for i in range(64)]
       self.difficulty = 1
       self.heuristic = 0
+      self.win = None
 
     def show(self):
       print (self.squares[0:4])
@@ -105,7 +106,7 @@ class TicTacToe3D():
             if pos not in positions:
               win = False
           if win:
-            print(combo)
+            self.win = combo
             return player
       return None
 
