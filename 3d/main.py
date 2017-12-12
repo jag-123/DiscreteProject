@@ -9,11 +9,17 @@ from view import GameView
 from model import GameModel
 from controller import GameController
 
+from tictactoe4x4 import TicTacToe3D
+from minimax import AI
+
 class GameMain(object):
   def __init__(self):
     self.model = GameModel()
     self.view = GameView(self.model)
     self.controller = GameController(self.model)
+
+    self.board = TicTacToe3D()
+    self.AI = AI(self.board)
 
   def GameLoop(self):
     """ Game Loop """
@@ -31,9 +37,23 @@ class GameMain(object):
       for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
           self.controller.select_square()
-          pos = self.controller.mouse_pos
-          print(pos)
-          print((pos[0])+ (pos[1]*16)+(pos[2]*4))
+          player_move = self.controller.mouse_pos
+          print(player_move)
+          player_move = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
+          print(player_move)
+
+          player = 'X'
+          if not player_move in self.board.available_moves():
+            continue
+          self.board.make_move(player_move, player)
+
+          if self.board.complete():
+              break
+          player = self.AI.get_enemy(player)
+          computer_move = self.AI.determineMove(self.board, player)
+          self.board.make_move(computer_move, player)
+          #self.board.show()
+
         elif event.type == pygame.QUIT:
           pygame.quit()
           quit()

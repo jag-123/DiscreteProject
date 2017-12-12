@@ -24,7 +24,7 @@ class GameController(object):
     if self.mouse_pos[0]>=0 and self.mouse_pos[0]<=3 and\
       self.mouse_pos[1]>=0 and self.mouse_pos[1]<=3 and\
       self.mouse_pos[2]>=0 and self.mouse_pos[2]<=3:
-      self.model.data[self.mouse_pos[1]][self.mouse_pos[2]][self.mouse_pos[0]] = 1
+      self.model.data[self.mouse_pos[1]][self.mouse_pos[2]][self.mouse_pos[0]] = 'X'
 
   def detect_square(self):
     """"""
