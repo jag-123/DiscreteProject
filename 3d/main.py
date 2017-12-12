@@ -48,11 +48,19 @@ class GameMain(object):
           self.board.make_move(player_move, player)
 
           if self.board.complete():
-              break
+            print('done')
+            pygame.time.wait(100)
+            done = True
+            break
+
           player = self.AI.get_enemy(player)
           computer_move = self.AI.determineMove(self.board, player)
           self.board.make_move(computer_move, player)
-          #self.board.show()
+
+          a = divmod(computer_move,16)
+          b = divmod(a[1],4)
+          self.model.data[b[1]][a[0]][b[0]] = 'O'
+          print(computer_move)
 
         elif event.type == pygame.QUIT:
           pygame.quit()
@@ -70,12 +78,14 @@ class GameMain(object):
         glColor4f(c[0],c[1],c[2],0.4)
         self.view.draw_square(*self.controller.mouse_pos)
 
+
       self.view.draw_pieces()
       self.view.draw_grid()
 
       pygame.display.flip()
       pygame.time.wait(10)
 
+    print ("winner is", self.board.winner())
 
 if __name__ == '__main__':
   MainWindow = GameMain()
