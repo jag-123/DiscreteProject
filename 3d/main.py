@@ -17,7 +17,6 @@ class GameMain(object):
     self.model = GameModel()
     self.view = GameView(self.model)
     self.controller = GameController(self.model)
-
     self.board = TicTacToe3D()
     self.AI = AI(self.board)
 
@@ -33,6 +32,8 @@ class GameMain(object):
       self.view.draw_fill()
 
       self.controller.detect_square()
+
+
 
       for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -67,6 +68,8 @@ class GameMain(object):
           pygame.quit()
           quit()
 
+
+
       glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
       self.mouse_valid =\
@@ -94,6 +97,95 @@ class GameMain(object):
 
     print ("winner is", self.board.winner())
 
+  def GameLoop2(self):
+    done = False
+    player = "O"
+
+    while not done:
+      self.view.set_camera()
+      self.view.rotate_camera()
+      glClear(GL_DEPTH_BUFFER_BIT)
+
+      self.view.draw_fill()
+
+      for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+          player = self.AI.get_enemy(player)
+          computer_move = self.AI.determineMove(self.board, player)
+          self.board.make_move(computer_move, player)
+
+          a = divmod(computer_move,16)
+          b = divmod(a[1],4)
+          self.model.data[a[0]][b[0]][b[1]] = player
+
+          if self.board.complete():
+            print('done')
+            pygame.time.wait(1000)
+            done = True
+            break
+          
+          print(self.model.data)
+          print(self.board.show())
+
+          if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+
+      glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+
+      self.view.draw_pieces()
+      self.view.draw_grid()
+
+      pygame.display.flip()
+      pygame.time.wait(10)
+
+    print ("winner is", self.board.winner())
+
+  def GameLoopSpectate(self):
+    """ Game Loop """
+    done = False
+    player = "O"
+
+    while not done:
+      self.view.set_camera()
+      self.view.rotate_camera()
+      glClear(GL_DEPTH_BUFFER_BIT)
+
+      self.view.draw_fill()
+
+      for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+          player = self.AI.get_enemy(player)
+          computer_move = self.AI.determineMove(self.board, player)
+          self.board.make_move(computer_move, player)
+
+          a = divmod(computer_move,16)
+          b = divmod(a[1],4)
+          self.model.data[a[0]][b[0]][b[1]] = player
+
+          if self.board.complete():
+            print('done')
+            pygame.time.wait(1000)
+            done = True
+            break
+          
+          print(self.model.data)
+          print(self.board.show())
+
+          if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+
+      glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+
+      self.view.draw_pieces()
+      self.view.draw_grid()
+
+      pygame.display.flip()
+      pygame.time.wait(10)
+
+    print ("winner is", self.board.winner())
+
 if __name__ == '__main__':
   MainWindow = GameMain()
-  MainWindow.GameLoop()
+  MainWindow.GameLoopSpectate() 

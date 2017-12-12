@@ -10,7 +10,7 @@ class AI():
         best_move = None
 
         for move in board.available_moves():
-            if board.complete() and (board.winner() == "O"):
+            if board.complete() and (board.winner() == player):
                 return move
             else:
                 board.make_move(move, player)
@@ -22,7 +22,7 @@ class AI():
                     best_score = val
                     best_move = move
             board.make_move(move,self.get_enemy(player))
-            if board.complete() and (board.winner() == "X"):
+            if board.complete() and (board.winner() == (self.get_enemy(player))):
                 if 10001 >= best_score:
                     best_score = 10001
                     best_move = move
