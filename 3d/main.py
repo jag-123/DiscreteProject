@@ -39,18 +39,16 @@ class GameMain(object):
           if ((self.controller.mouse_pos[0])+(self.controller.mouse_pos[1]*16)+(self.controller.mouse_pos[2]*4)) in self.board.available_moves():
             self.controller.select_square()
             player_move = self.controller.mouse_pos
-            print(player_move)
-            player_move = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
-            print(player_move)
+            player_move2 = ((player_move[0])+ (player_move[1]*16)+(player_move[2]*4))
+
 
             player = 'X'
 
-            self.board.make_move(player_move, player)
-            self.board.show()
-            
+            self.board.make_move(player_move2, player)
+
             if self.board.complete():
               print('done')
-              pygame.time.wait(100)
+              pygame.time.wait(1000)
               done = True
               break
 
@@ -60,9 +58,16 @@ class GameMain(object):
 
             a = divmod(computer_move,16)
             b = divmod(a[1],4)
-            self.model.data[b[1]][a[0]][b[0]] = 'O'
+            self.model.data[a[0]][b[0]][b[1]] = 'O'
+
+            print(self.model.data)
+
+            print(player_move)
+            print(player_move2)
             print(b[1],a[0],b[0])
             print(computer_move)
+
+            print(self.board.show())
 
         elif event.type == pygame.QUIT:
           pygame.quit()
