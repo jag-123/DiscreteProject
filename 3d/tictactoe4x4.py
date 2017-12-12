@@ -1,5 +1,6 @@
 import random
 from minimax import AI
+import math
 
 class TicTacToe3D():
     winning_combos = (
@@ -11,7 +12,7 @@ class TicTacToe3D():
 
     def __init__(self):
       self.squares = [None for i in range(64)]
-      self.difficulty = 2
+      self.difficulty = 3
       self.heuristic = 0
 
     def show(self):
@@ -50,21 +51,33 @@ class TicTacToe3D():
     def heuristic_calc(self):
       xWins = 0
       oWins = 0
+      plus_minus = 0
 
-      #two nearly identical for loops... optimize somebody pls
+      # two nearly identical for loops... optimize somebody pls
       for combo in self.winning_combos:
-        if all([self.squares[x] == 'X' \
-          or self.squares[x] != 'O' for x in combo]):
-          xWins += 1   
+        if any(combo): 
+          if all([self.squares[x] == 'X' \
+            or self.squares[x] != 'O' for x in combo]):
+            xWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'X') else 0 for x in combo]))))
+
+      # for combo in self.winning_combos:
+      #   if any(combo): 
+      #     plus_minus = int((math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else (-3) for x in combo])))))
+
+
+      #      if all([self.squares[x] == 'X' \
+      # #       or self.squares[x] != 'O' for x in combo]):
+
 
       for combo in self.winning_combos:
-        if all([self.squares[x] == 'O' \
-          or self.squares[x] != 'X' for x in combo]):
-          oWins += 1
+        if any(combo):
+          if all([self.squares[x] == 'O' \
+            or self.squares[x] != 'X' for x in combo]):
+            oWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else 0 for x in combo])))) 
 
-      self.heuristic = (oWins-xWins)
 
       return (oWins-xWins)
+      # return plus_minus 
 
     def complete(self):
       if None not in [v for v in self.squares]:
