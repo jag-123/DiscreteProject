@@ -5,7 +5,7 @@ board_colors = [
     [0.0,1.0,1.0, 1.0]
 ]
 
-screen_size = (1000,800)
+screen_size = (1200,1000)
 camera_fov = 20.0
 spacing = 3.0
 camera_radius = 30.0
