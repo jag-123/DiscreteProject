@@ -19,8 +19,7 @@ winning_combo = [
 ]
 #add vertical diagonal - 16
 
-
-
+print (len(winning_combo))
 
 new_combos = winning_combo[:]
 
