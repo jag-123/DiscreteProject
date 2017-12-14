@@ -3,28 +3,27 @@ import random
 class AI():
     def __init__(self,board):
         self.board = board
-        self.maximizingPlayer = None
 
     def determineMove(self, board, player):
         best_score = -10000
         choices = []
         best_move = None
-        self.maximizingPlayer = player
 
         for move in board.available_moves():
-            if board.complete() and (board.winner() == player):
+            if board.complete() and (board.winner() == "O"):
                 return move
             else:
                 board.make_move(move, player)
                 val = self.alphabeta(board, self.get_enemy(player), -10000, 10000, 0)
                 board.make_move(move, None)
                 print ("move:", move+1, "heuristic:", val)
+                # print ("move:", move + 1, "causes:", board.winners[val + 1], board.heuristic)
                 if val >= best_score:
                     best_score = val
                     best_move = move
             board.make_move(move,self.get_enemy(player))
-            if board.complete() and (board.winner() == (self.get_enemy(player))):
-                if 10001 >= best_score:
+            if board.complete() and (board.winner() == "X"):
+                if 1001 >= best_score:
                     best_score = 10001
                     best_move = move
             board.make_move(move,None)
@@ -43,7 +42,7 @@ class AI():
                 node.make_move(move, player)
 
                 #check for winner
-                if node.complete() and node.winner == 'O':
+                if node.complete():
                     node.make_move(move,None)
                     return 10000
 
@@ -61,7 +60,7 @@ class AI():
                 node.make_move(move, player)
 
                 #check for winner
-                if node.complete() and node.winner == 'X':
+                if node.complete():
                     node.make_move(move,None)
                     return -10000
 

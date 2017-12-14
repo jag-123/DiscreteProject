@@ -36,14 +36,14 @@ class AI():
 
 
         if depth == node.difficulty:
-            return node.heuristic_calc()
+            return node.heuristic_calc(self.maximizingPlayer)
 
-        if player == 'O':
+        if player == self.maximizingPlayer:
             for move in node.available_moves():
                 node.make_move(move, player)
 
                 #check for winner
-                if node.complete() and node.winner == 'O':
+                if node.complete() and node.winner == self.maximizingPlayer:
                     node.make_move(move,None)
                     return 10000
 
@@ -56,12 +56,12 @@ class AI():
                     return beta
             return alpha
 
-        if player == 'X':
+        if player != self.maximizingPlayer:
             for move in node.available_moves():
                 node.make_move(move, player)
 
                 #check for winner
-                if node.complete() and node.winner == 'X':
+                if node.complete() and node.winner == self.get_enemy(player):
                     node.make_move(move,None)
                     return -10000
 
@@ -77,7 +77,7 @@ class AI():
 
 
 
-        if player == 'O':
+        if player == self.maximizingPlayer:
             return alpha
         else:
             return beta
