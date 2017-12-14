@@ -58,7 +58,7 @@ class TicTacToe3D():
       return self.availableMoves
 
 
-    def heuristic_calc(self,player):
+    def heuristic_calc(self,player=None):
       xWins = 0
       oWins = 0
       plus_minus = 0
@@ -85,8 +85,9 @@ class TicTacToe3D():
             or self.squares[x] != 'X' for x in combo]):
             oWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else 0 for x in combo])))) 
 
-
-      if player == "X":
+      if player == None:
+        return (oWins-xWins)
+      elif player == "X":
         return (xWins - oWins)
       return (oWins-xWins)
       # return plus_minus 
