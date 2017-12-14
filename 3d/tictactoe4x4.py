@@ -22,7 +22,7 @@ class TicTacToe3D():
 
     def __init__(self):
       self.squares = [None for i in range(64)]
-      self.difficulty = 2
+      self.difficulty = 1
       self.win = None
 
     def show(self):
@@ -65,13 +65,13 @@ class TicTacToe3D():
 
       # two nearly identical for loops... optimize somebody pls
       for combo in self.winning_combos:
-        if any(combo): 
+        if any(combo):
           if all([self.squares[x] == 'X' \
             or self.squares[x] != 'O' for x in combo]):
             xWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'X') else 0 for x in combo]))))
 
       # for combo in self.winning_combos:
-      #   if any(combo): 
+      #   if any(combo):
       #     plus_minus = int((math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else (-3) for x in combo])))))
 
 
@@ -83,14 +83,14 @@ class TicTacToe3D():
         if any(combo):
           if all([self.squares[x] == 'O' \
             or self.squares[x] != 'X' for x in combo]):
-            oWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else 0 for x in combo])))) 
+            oWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else 0 for x in combo]))))
 
       if player == None:
         return (oWins-xWins)
       elif player == "X":
         return (xWins - oWins)
       return (oWins-xWins)
-      # return plus_minus 
+      # return plus_minus
 
     def complete(self):
       if None not in [v for v in self.squares]:
@@ -109,6 +109,7 @@ class TicTacToe3D():
               win = False
           if win:
             self.win = combo
+            print(combo)
             return player
       return None
 
