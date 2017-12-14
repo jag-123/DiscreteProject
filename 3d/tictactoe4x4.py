@@ -68,7 +68,7 @@ class TicTacToe3D():
         if any(combo):
           if all([self.squares[x] == 'X' \
             or self.squares[x] != 'O' for x in combo]):
-            xWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'X') else 0 for x in combo]))))
+            xWins += int(math.pow(2,(sum([3 if (self.squares[x] == 'X') else 0 for x in combo]))))
 
       # for combo in self.winning_combos:
       #   if any(combo):
@@ -83,7 +83,7 @@ class TicTacToe3D():
         if any(combo):
           if all([self.squares[x] == 'O' \
             or self.squares[x] != 'X' for x in combo]):
-            oWins += int(math.pow(2.6,(sum([3 if (self.squares[x] == 'O') else 0 for x in combo]))))
+            oWins += int(math.pow(2,(sum([3 if (self.squares[x] == 'O') else 0 for x in combo]))))
 
       if player == None:
         return (oWins-xWins)
