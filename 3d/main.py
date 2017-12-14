@@ -47,13 +47,13 @@ class GameMain(object):
 
               self.board.make_move(player_move2, player)
 
-              player = self.AI.get_enemy(player)
-              computer_move = self.AI.determineMove(self.board, player)
-              self.board.make_move(computer_move, player)
+              # player = self.AI.get_enemy(player)
+              # computer_move = self.AI.determineMove(self.board, player)
+              # self.board.make_move(computer_move, player)
 
-              a = divmod(computer_move,16)
-              b = divmod(a[1],4)
-              self.model.data[a[0]][b[0]][b[1]] = 'O'
+              # a = divmod(computer_move,16)
+              # b = divmod(a[1],4)
+              # self.model.data[a[0]][b[0]][b[1]] = 'O'
 
               # print(self.model.data)
 
