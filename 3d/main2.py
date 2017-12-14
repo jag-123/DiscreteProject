@@ -59,8 +59,8 @@ class GameMain2(object):
             done = True
             break
           
-          print(self.model.data)
-          print(self.board.show())
+          # print(self.model.data)
+          # print(self.board.show())
 
           if event.type == pygame.QUIT:
             pygame.quit()

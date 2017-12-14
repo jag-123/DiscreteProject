@@ -109,7 +109,7 @@ class TicTacToe3D():
               win = False
           if win:
             self.win = combo
-            print(combo)
+            #print(combo)
             return player
       return None
 
