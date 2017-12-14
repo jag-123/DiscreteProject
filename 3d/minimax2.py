@@ -18,7 +18,8 @@ class AI():
                 board.make_move(move, player)
                 val = self.alphabeta(board, self.get_enemy(player), -10000, 10000, 0)
                 board.make_move(move, None)
-                print ("move:", move+1, "heuristic:", val)
+            
+                # print ("move:", move+1, "heuristic:", val)
                 if val >= best_score:
                     best_score = val
                     best_move = move
