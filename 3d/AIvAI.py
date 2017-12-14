@@ -13,6 +13,10 @@ class AIvsAI():
 		done = False
 		player = "O"
 
+		#resets for each game
+		self.board = TicTacToe3D()
+		self.AI = AI(self.board)
+
 		while not done:
 			player = self.AI.get_enemy(player)
 
@@ -27,18 +31,30 @@ class AIvsAI():
 			self.board.make_move(computer_move, player)
 
 			#print board and move
-			self.board.show()
-			print(player, computer_move)
-			print("")
+			# self.board.show()
+			# print(player, computer_move)
+			# print("")
 
 			if self.board.complete():
 				print('done')
 				print("winner is", self.board.winner())
 				done = True
 
+		return self.board.winner()
 
 
 
 if __name__ == '__main__':
 	game = AIvsAI(1,1)
-	game.GameRunner()	
+
+	xWins = 0
+	yWins = 0
+	tie = 0
+	for i in range(100):
+		winner = game.GameRunner()
+		if winner == "X":
+			xWins = xWins + 1
+		elif winner == "O":
+			oWins = oWins + 1
+		else:
+			tie = tie + 1
